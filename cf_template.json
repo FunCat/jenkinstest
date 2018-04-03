@@ -1,6 +1,12 @@
 {
    "AWSTemplateFormatVersion" : "2010-09-09",
    "Description" : "Test EC2 instance for jenkins job",
+   "Parameters": {
+      "ImageId": {
+         "Type": "String",
+	 "Description": "Id for AMI image"
+      }
+   },
    "Resources" : {
       "MyEC2Instance" : {
          "Type" : "AWS::EC2::Instance",

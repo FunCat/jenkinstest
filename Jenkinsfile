@@ -1,12 +1,6 @@
 #!groovy
 import groovy.json.JsonSlurperClassic 
 
-@NonCPS
-def parseJsonToMap(String json) {
-    final slurper = new JsonSlurperClassic()
-    return new HashMap<>(slurper.parseText(json))
-}
-
 def getAmiId(){
 	def packerOut = readFile("packer_output.json")
 	print "${packerOut}"
@@ -26,13 +20,12 @@ node('master') {
     }
 
     stage('build') {
-	AMI = getAmiId()
-	print "${AMI}"
         sh "./runpacker.sh"
+	AMI = getAmiId()
     }
 
     stage('deploy') {
-    	sh "aws cloudformation create-stack --stack-name teststack --template-body file://cf_template.json"
+    	sh "aws cloudformation create-stack --stack-name teststack --template-body file://cf_template.json --parameters ParameterKey=ImageId,ParameterValue=${AMI}"
     }
 
 }
