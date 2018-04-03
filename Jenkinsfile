@@ -4,7 +4,7 @@ import groovy.json.JsonSlurperClassic
 def getAmiId(){
 	def packerOut = readFile("packer_output.json")
 	print "${packerOut}"
-	def packerOutJson = parseJsonToMap(packerOut)
+	def packerOutJson = new groovy.json.JsonSlurperClassic().parseText(packerOut)
 	print "${packerOutJson.builds[0].artifact_id.split(":")[1]}"
 	AMI = packerOutJson.builds[0].artifact_id.split(":")[1]
 

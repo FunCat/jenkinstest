@@ -11,7 +11,7 @@
       "MyEC2Instance" : {
          "Type" : "AWS::EC2::Instance",
          "Properties" : {
-            "ImageId" : "ami-97785bed",
+            "ImageId" : { "Ref": "ImageId" },
             "KeyName" : "ImageForStream",
             "InstanceType": "t2.micro"
          }
