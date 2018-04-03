@@ -12,7 +12,13 @@
 	"provisioners": [
 		{
 			"type": "shell",
-			"source": "./test_shell_script.sh"
+			"inline" : [
+				"echo ----> Updating apt-get",
+				"sudo apt-get update",
+				"echo ----> Install java 8",
+				"sudo apt-get install oracle-java8-installer",
+				"echo ----> FINISH"
+        		]
 		}
 	],
 	"builders": [{
@@ -25,7 +31,7 @@
 		"subnet_id": "{{user `subnet_id`}}",
 		"region": "{{user `region`}}",
 		"source_ami": "{{user `source_ami`}}",
-		"instance_type": "t2.large",
+		"instance_type": "t2.micro",
 		"ssh_username": "ec2-user",
         	"ami_name": "{{user `app_name`}}_{{user `timestamp`}}",
 		"tags": {
@@ -50,13 +56,5 @@
                 		"delete_on_termination": true
 			} 
         	]
-	}],
-
-	"post-processors": [
-	    {
-	      "type": "manifest",
-	      "output": "packer_output.json",
-	      "strip_path": true
-	    }
-  	]
+	}]
 }
