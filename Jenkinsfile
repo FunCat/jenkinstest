@@ -1,5 +1,7 @@
 #!groovy
 
+import groovy.json.JsonSlurper
+
 node('master') {
 
     stage('checkout') {
