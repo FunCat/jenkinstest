@@ -13,7 +13,7 @@ node('master') {
     }
 
     stage('deploy') {
-    	bat "aws cloudformation create-stack --stack-name MyTestStack --template-body cf_template.json"
+    	bat "aws cloudformation create-stack --stack-name teststack --template-body file://cf_template.json"
     }
 
 }
