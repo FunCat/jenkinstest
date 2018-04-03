@@ -8,4 +8,8 @@ node('master') {
         commitId = scmVars.GIT_COMMIT
     }
 
+    stage('build') {
+        sh 'mvn clean package'
+    }
+
 }
