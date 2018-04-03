@@ -4,6 +4,7 @@ export AWS_PROFILE=default
 # awsr s3 ls --profile eis-deliverydevqa
 timestamp=`date +%s`
 # Builld the ami in devqa for testing
+export PATH=$PATH:~/Desktop
 packer build -on-error=ask \
 -var vpc_id=vpc-3697974e \
 -var subnet_id=subnet-fad0b7d5 \
