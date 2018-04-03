@@ -1,11 +1,15 @@
 #!groovy
+import groovy.json.JsonSlurperClassic 
 
-import groovy.json.JsonSlurperClassic;
+@NonCPS
+def jsonParse(def json) {
+    new groovy.json.JsonSlurperClassic().parseText(json)
+}
 
 def getAmiId(){
 	def packerOut = readFile("packer_output.json")
 	print "${packerOut}"
-	def packerOutJson = new JsonSlurperClassic().parseText(packerOut)
+	def packerOutJson = jsonParse(packerOut)
 	print "${packerOutJson.builds[0].artifact_id.split(":")[1]}"
 	AMI = packerOutJson.builds[0].artifact_id.split(":")[1]
 
