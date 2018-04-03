@@ -1,9 +1,11 @@
-pipeline {
-    stages {
-        stage('build') {
-            steps {
-                sh 'mvn --version'
-            }
-        }
+#!groovy
+
+node('master') {
+
+    stage('checkout') {
+        deleteDir()
+        def scmVars = checkout scm
+        commitId = scmVars.GIT_COMMIT
     }
+
 }
