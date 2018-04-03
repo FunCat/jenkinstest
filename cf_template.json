@@ -1,0 +1,25 @@
+{
+   "AWSTemplateFormatVersion" : "2010-09-09",
+   "Description" : "Test EC2 instance for jenkins job",
+   "Resources" : {
+      "MyEC2Instance" : {
+         "Type" : "AWS::EC2::Instance",
+         "Properties" : {
+            "ImageId" : "ami-97785bed",
+            "KeyName" : "testkey",
+            "InstanceType": "t2.micro",
+            "BlockDeviceMappings" : [
+               {
+                  "DeviceName" : "/dev/sdm",
+                  "Ebs" : {
+                     "VolumeType" : "io1",
+                     "Iops" : "200",
+                     "DeleteOnTermination" : "false",
+                     "VolumeSize" : "20"
+                  }
+               }
+            ]
+         }
+      }
+   }
+}     

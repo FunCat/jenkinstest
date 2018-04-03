@@ -12,4 +12,8 @@ node('master') {
         bat "mvn clean package"
     }
 
+    stage('deploy') {
+    	bat "aws cloudformation create-stack --stack-name MyTestStack --template-body cf_template.json"
+    }
+
 }
