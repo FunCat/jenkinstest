@@ -1,7 +1,5 @@
 #!groovy
 
-import groovy.json.JsonSlurper
-
 node('master') {
 
     stage('checkout') {
@@ -11,10 +9,13 @@ node('master') {
     }
 
     stage('build') {
-	def inputFile = new File("./packer_output.json")
-	def InputJSON = new JsonSlurper().parseText(inputFile.text)
-	InputJSON.each{ println it }
         sh "./runpacker.sh"
+	def packerOut = readFile("packer_output.json")
+	def packerOutJson = new groovy.json.JsonSlurperClassic().parseText(packerOut)
+	print "${packerOut}"
+	print "${packerOutJson.builds[0].artifact_id.split(":")[1]}"
+	AMI = packerOutJson.builds[0].artifact_id.split(":")[1]
+	print "${AMI}"
     }
 
     stage('deploy') {
