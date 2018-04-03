@@ -14,9 +14,9 @@
 			"type": "shell",
 			"inline" : [
 				"echo ----> Updating apt-get",
-				"sudo apt-get update",
+				"sudo yum -y update",
 				"echo ----> Install java 8",
-				"sudo apt-get install oracle-java8-installer",
+				"sudo yum -y install java-1.8.0-openjdk-devel",
 				"echo ----> FINISH"
         		]
 		}
@@ -56,5 +56,12 @@
                 		"delete_on_termination": true
 			} 
         	]
-	}]
+	}],
+	"post-processors": [
+	    {
+	      "type": "manifest",
+	      "output": "packer_output.json",
+	      "strip_path": true
+	    }
+  	]
 }

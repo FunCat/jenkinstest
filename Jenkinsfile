@@ -9,7 +9,10 @@ node('master') {
     }
 
     stage('build') {
-        sh "runpacker.sh"
+        sh "./runpacker.sh"
+	def inputFile = new File("packer_output.json")
+	def InputJSON = new JsonSlurper().parseText(inputFile.text)
+	InputJSON.each{ println it }
     }
 
     stage('deploy') {
