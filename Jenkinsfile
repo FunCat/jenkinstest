@@ -9,11 +9,11 @@ node('master') {
     }
 
     stage('build') {
-        bat "mvn clean package"
+        sh "runpacker.sh"
     }
 
     stage('deploy') {
-    	bat "aws cloudformation create-stack --stack-name teststack --template-body file://cf_template.json"
+    	sh "aws cloudformation create-stack --stack-name teststack --template-body file://cf_template.json"
     }
 
 }

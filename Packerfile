@@ -1,0 +1,62 @@
+{
+	"variables": {
+		"vpc_id": "",
+		"subnet_id": "",
+		"timestamp": "",
+		"app_name" : "",
+		"source_ami": "ami-97785bed",
+		"region": "us-east-1",
+		"git_branch": "{{ env `BRANCH_NAME`}}",
+		"job_name": "{{ env `JOB_NAME`}}"
+	},
+	"provisioners": [
+		{
+			"type": "shell",
+			"source": "./test_shell_script.sh"
+		}
+	],
+	"builders": [{
+		"type": "amazon-ebs",
+		"ami_virtualization_type": "hvm",
+	    	"ami_users":[
+	        	"121391007187"
+        	],
+		"vpc_id":"{{user `vpc_id`}}",
+		"subnet_id": "{{user `subnet_id`}}",
+		"region": "{{user `region`}}",
+		"source_ami": "{{user `source_ami`}}",
+		"instance_type": "t2.large",
+		"ssh_username": "ec2-user",
+        	"ami_name": "{{user `app_name`}}_{{user `timestamp`}}",
+		"tags": {
+			"creator": "packer",
+			"service": "{{user `app_name`}}",
+			"ComponentTag-Platform-AWS-MainPayer": "Infrastructure",
+			"date": "{{user `timestamp`}}",
+			"git_branch": "{{user `git_branch`}}",
+			"jenkins_job": "{{user `job_name`}}"
+		},
+		"ami_block_device_mappings": [ 
+			{
+                		"device_name": "/dev/xvda",
+                		"volume_size": 8,
+                		"delete_on_termination": true
+            		} 
+        	],
+        	"launch_block_device_mappings": [ 
+            		{
+                		"device_name": "/dev/xvda",
+                		"volume_size": 8,
+                		"delete_on_termination": true
+			} 
+        	]
+	}],
+
+	"post-processors": [
+	    {
+	      "type": "manifest",
+	      "output": "packer_output.json",
+	      "strip_path": true
+	    }
+  	]
+}
