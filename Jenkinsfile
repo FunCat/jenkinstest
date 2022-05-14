@@ -1,8 +1,9 @@
 #!groovy
 
-node('master') {
 
-    pipeline {
+pipeline {
+
+    node('master') {
         stage('Сheckout') {
             deleteDir()
             def scmVars = checkout scm
