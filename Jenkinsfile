@@ -2,14 +2,16 @@
 
 node('master') {
 
-    stage('checkout') {
-        deleteDir()
-        def scmVars = checkout scm
-        commitId = scmVars.GIT_COMMIT
-        print("Commit Id = " + commitId)
-    }
+    pipeline {
+        stage('Сheckout') {
+            deleteDir()
+            def scmVars = checkout scm
+            commitId = scmVars.GIT_COMMIT
+            print("Commit Id = " + commitId)
+        }
 
-    stage('test') {
-        print("Test stage !!!")
+        stage('Test') {
+            print("Test stage !!!")
+        }
     }
 }
