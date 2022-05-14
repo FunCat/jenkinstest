@@ -1,8 +1,9 @@
 #!groovy
 
 node{
+    deleteDir()
+    
     stage("Checkout") {
-        deleteDir()
         def scmVars = checkout scm
         commitId = scmVars.GIT_COMMIT
         print("Commit Id = " + commitId)
