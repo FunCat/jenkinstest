@@ -1,15 +1,4 @@
 #!groovy
-import groovy.json.JsonSlurperClassic 
-
-def getAmiId(){
-	def packerOut = readFile("packer_output.json")
-	print "${packerOut}"
-	def packerOutJson = new groovy.json.JsonSlurperClassic().parseText(packerOut)
-	print "${packerOutJson.builds[0].artifact_id.split(":")[1]}"
-	AMI = packerOutJson.builds[0].artifact_id.split(":")[1]
-
-	return AMI
-}
 
 node('master') {
 
@@ -17,15 +6,10 @@ node('master') {
         deleteDir()
         def scmVars = checkout scm
         commitId = scmVars.GIT_COMMIT
+        print("Commit Id = " + commitId)
     }
 
-    stage('build') {
-        sh "./runpacker.sh"
-	AMI = getAmiId()
+    stage('test') {
+        print("Test stage !!!")
     }
-
-    stage('deploy') {
-    	sh "aws cloudformation create-stack --stack-name teststack --template-body file://cf_template.json --parameters ParameterKey=ImageId,ParameterValue=${AMI}"
-    }
-
 }
