@@ -9,18 +9,14 @@ pipeline {
 
     stages {
         stage("Checkout") {
-            steps {
-                deleteDir()
-                def scmVars = checkout scm
-                commitId = scmVars.GIT_COMMIT
-                print("Commit Id = " + commitId)
-            }
+            deleteDir()
+            def scmVars = checkout scm
+            commitId = scmVars.GIT_COMMIT
+            print("Commit Id = " + commitId)
         }
 
         stage("Test") {
-            steps {
-                print("Test stage !!!")
-            }
+            print("Test stage !!!")
         }
     }
 
