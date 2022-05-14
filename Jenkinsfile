@@ -23,6 +23,7 @@ pipeline {
             steps {
                 script {
                     print("Test stage !!!")
+                    sh 'gradle -version'
                 }
             }
         }
