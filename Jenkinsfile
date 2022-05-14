@@ -4,11 +4,11 @@
 pipeline {
 
     agent { 
-        label 'master'
+        label "master"
     }
 
     stages {
-        stage('Checkout') {
+        stage("Checkout") {
             steps {
                 deleteDir()
                 def scmVars = checkout scm
@@ -17,7 +17,7 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage("Test") {
             steps {
                 print("Test stage !!!")
             }
